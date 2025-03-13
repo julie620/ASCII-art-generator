@@ -4,10 +4,6 @@ import math
 
 class ImgArt:
 
-    def get_img_name(self):
-        file_name = input("Enter Image Name: ")
-        return file_name
-
     def get_img_height(self, file_name):
         img = Image.open(file_name)
         height = img.height
@@ -53,8 +49,7 @@ class ImgArt:
 
         return char_matrix
 
-    def print_art(self):
-        file_name = self.get_img_name()
+    def print_art(self, file_name):
         height = self.get_img_height(file_name)
         width = self.get_img_width(file_name)
         pixel_matrix = self.get_pixels(height, width, file_name)

@@ -1,12 +1,11 @@
-from img_art import ImgArt
-from words import Words
+
+from window import Window
 
 def main():
-    letter_art = Words()
-    art = ImgArt()
 
-    letter_art.print_ascii_art()
-    art.print_art()
+    gui = Window()
+
+    gui.run()
 
 if __name__ == "__main__":
     main()
