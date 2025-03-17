@@ -19,11 +19,17 @@ class Window:
         img_label = Label(root)
 
         preview_btn = Button(root, 
-                                text='Preview Image',
-                                command= lambda: self.selected_img(img_listbox, result_label, img_label))
+                            text='Preview Image',
+                            command= lambda: self.preview_img(img_listbox, result_label, img_label))
+        
+        print_btn = Button(root,
+                           text='Print Image to Terminal',
+                           command= lambda: self.print_img(img_listbox, result_label, img_label))
+
         
         intro_label.pack()
         img_listbox.pack()
+        print_btn.pack(side='bottom')
         preview_btn.pack(side='bottom')
         result_label.pack()
         img_label.pack()
@@ -49,7 +55,24 @@ class Window:
         
         return img_listbox
 
-    def selected_img(self, img_listbox: Listbox, result_label: Label, img_label: Label):
+    def preview_img(self, img_listbox: Listbox, result_label: Label, img_label: Label):
+        ascii_art = ImgArt()
+        
+        selected_index = img_listbox.curselection()
+
+        if selected_index:
+            selected_img = img_listbox.get(selected_index[0])
+            result_label.config(text=f"Selected Image: {selected_img}")
+            path = "images\\" + selected_img
+            self.img = Image.open(path)
+            self.img = ImageTk.PhotoImage(self.img)
+            img_label.config(image = self.img)
+            #ascii_art.print_art(path)
+
+        else:
+            result_label.config(text="No image selected")
+
+    def print_img(self, img_listbox: Listbox, result_label: Label, img_label: Label):
         ascii_art = ImgArt()
         
         selected_index = img_listbox.curselection()
@@ -65,7 +88,3 @@ class Window:
 
         else:
             result_label.config(text="No image selected")
-
-    def preview(self):
-        print('Test')   
-

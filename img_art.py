@@ -16,6 +16,7 @@ class ImgArt:
 
     def get_pixels(self, height, width, file_name):
         img = Image.open(file_name)
+        img = img.resize((width, height))
         pixel_matrix = np.empty([height, width], dtype='i,i,i')   
         
         for y in range (height):
@@ -48,10 +49,30 @@ class ImgArt:
                 char_matrix[y][x] = char_string[calc]
 
         return char_matrix
+    
+    def get_resize_factor(self, width, height):
+        if width >= 700 or height >= 700:
+            return 7
+        elif width >= 600 or height >= 600:
+            return 6
+        elif width >= 500 or height >= 500:
+            return 5
+        elif width >= 400 or height >= 400:
+            return 4
+        elif width >= 300 or height >= 300:
+            return 3
+        elif width >= 200 or height >= 200:
+            return 2
+        elif width >= 100 or height >= 100:
+            return 1
+        
 
     def print_art(self, file_name):
-        height = self.get_img_height(file_name)
-        width = self.get_img_width(file_name)
+        resize_factor = self.get_resize_factor(self.get_img_width(file_name),self.get_img_height(file_name))
+        height = self.get_img_height(file_name) // resize_factor
+        width = self.get_img_width(file_name) // resize_factor
+        print('width: ' + str(width))
+        print('height: ' + str(height))
         pixel_matrix = self.get_pixels(height, width, file_name)
         brightness_matrix = self.get_brightness(height, width, pixel_matrix)
         char_matrix = self.get_char(height, width, brightness_matrix)
@@ -59,5 +80,5 @@ class ImgArt:
             for x in range (width):
                 print(char_matrix[y][x].decode('utf-8'), end="")
                 print(char_matrix[y][x].decode('utf-8'), end="")
-                print(char_matrix[y][x].decode('utf-8'), end="")
+                #print(char_matrix[y][x].decode('utf-8'), end="")
             print()
